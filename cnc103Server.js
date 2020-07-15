@@ -30,6 +30,10 @@ server.on("message", function (msg, info) {
   */
     let startChar = msg.indexOf("}", 0);
     console.log(`msg.indexOf('}', 0)=>${startChar}`);
+    if (startChar === -1) {
+      throw new Error("No startChar in message");
+    }
+
     let firstComma = msg.indexOf(",", startChar);
     if (firstComma === -1) {
       throw new Error("No comma in message");
@@ -46,14 +50,20 @@ server.on("message", function (msg, info) {
     } else {
       console.log(`strId IS a number`);
     }
-    console.log(`firstComma=${firstComma}`);
-    let endOfFrame = msg.indexOf('%', firstComma);
-    if (-1 === endOfFrame) {
-      throw new Error("could not find end of frame character");
+
+    let endOfFrame = msg.indexOf('%',firstComma);
+    console.log(`1. endOfFrame=>${endOfFrame}`);
+    if(-1===endOfFrame){
+      endOfFrame = msg.length;
+      console.log(`2. endOfFrame=>${endOfFrame}`);
+    }else{
+      console.log(`3. endOfFrame=>${endOfFrame}`);
     }
+    console.log(`4. endOfFrame=>${endOfFrame}`);
+
     var bufPartCounter = msg.slice(firstComma + 1, endOfFrame);
     console.log(`bufPartCounter=>${bufPartCounter}`);
-    var strPartCounter = bufPartCounter.toString();
+    var strPartCounter = bufPartCounter.toString().trim();
     var numPartCounter = Number(strPartCounter); // returns NaN
 
     if (Number.isNaN(numPartCounter)) {
@@ -103,6 +113,7 @@ server.on("close", function () {
 });
 
 server.bind(2222);
+//server.bind(2221);
 /*
 setTimeout(function () {
   server.close();

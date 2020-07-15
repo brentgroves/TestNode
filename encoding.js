@@ -1,40 +1,5 @@
 // https://mathiasbynens.be/notes/javascript-escapes
 //https://unicode-table.com/
-var CNC103Frame = `{{{{}103,10%`
-var data1 = Buffer.from(CNC103Frame);
-console.log(`data=>${data1}`);
-console.log(`data.toString()=>${data1.toString()}`);
-
-/*
-buffer.indexOf(value, start, encoding);
-*/
-let startChar=data1.indexOf('}', 0);
-console.log(`data1.indexOf('}', 0)=>${data1.indexOf('}', 0)}`);
-let firstComma = data1.indexOf(',', startChar);
-console.log(`data1.indexOf(',', startChar)=>${data1.indexOf(',', startChar)}`);
-var id = data1.slice(startChar+1, firstComma);
-console.log(`CNC id=>${id}`);
-var strId = id.toString();
-var intId = parseInt(strId, 10);
-var numId = Number(strId); // returns NaN
-if(Number.isNaN(numId)){
-    console.log(`strId is NOT a number`);
-}else{
-    console.log(`strId IS a number`);
-}
-
-let endOfFrame = data1.indexOf(firstComma, '%');
-var bufPartCounter = data1.slice(firstComma+1, endOfFrame);
-var strPartCounter = bufPartCounter.toString();
-var numPartCounter = Number(strPartCounter); // returns NaN
-
-if(Number.isNaN(numPartCounter)){
-    console.log(`partCounter is NOT a number =>${strPartCounter}`);
-}else{
-    console.log(`partCounter IS a number=>${strPartCounter}`);
-}
-
-
 
 // var fail = Number('42px'); // returns NaN
 // Number.isNaN(123) //false
@@ -103,4 +68,73 @@ console.log(`a=>\u{000000000061}`);
 
 console.log(`Ű =>\u{0170}`);
 console.log(`😰 =>\u{1f630}`);
+
+var buff2=Buffer.from('12', 'hex');  //DC2
+console.log(`buff=>${buff2}`);
+console.log(`Data received in hex =>${buff2.toString("hex")}`);
+console.log(`Data received in ascii =>${buff2.toString("ascii")}`);
+console.log("Received %d bytes\n",buff2.length);
+
+if(0x12===buff2[0]){
+    console.log(`buff2[0]=${buff2[0]}`);
+
+}
+
+var buff3=Buffer.from('2514', 'hex');  //DC2
+console.log(`buff=>${buff3}`);
+console.log(`Data received in hex =>${buff3.toString("hex")}`);
+console.log(`Data received in ascii =>${buff3.toString("ascii")}`);
+console.log("Received %d bytes\n",buff3.length);
+
+if(0x25===buff3[0]){
+    console.log(`buff3[0]=${buff3[0]}`);
+
+}
+
+
+var CNC103Frame = `{{{{{}103,       108`
+var data1 = Buffer.from(CNC103Frame);
+console.log(`data=>${data1}`);
+console.log("Received %d bytes\n",data1.length);
+/*
+buffer.indexOf(value, start, encoding);
+*/
+let startChar=data1.indexOf('}', 0);
+console.log(`data1.indexOf('}', 0)=>${data1.indexOf('}', 0)}`);
+let firstComma = data1.indexOf(',', startChar);
+console.log(`data1.indexOf(',', startChar)=>${data1.indexOf(',', startChar)}`);
+var id = data1.slice(startChar+1, firstComma);
+console.log(`CNC id=>${id}`);
+var strId = id.toString();
+// var intId = parseInt(strId, 10);
+var numId = Number(strId); // returns NaN
+if(Number.isNaN(numId)){
+    console.log(`strId is NOT a number`);
+}else{
+    console.log(`strId IS a number`);
+}
+
+let endOfFrame = data1.indexOf('%',firstComma);
+console.log(`1. endOfFrame=>${endOfFrame}`);
+
+if(-1===endOfFrame){
+  endOfFrame = data1.length;
+  console.log(`2. endOfFrame=>${endOfFrame}`);
+}else{
+  console.log(`3. endOfFrame=>${endOfFrame}`);
+
+}
+console.log(`4. endOfFrame=>${endOfFrame}`);
+
+
+var bufPartCounter = data1.slice(firstComma+1, endOfFrame);
+var strPartCounter = bufPartCounter.toString().trim();
+var numPartCounter = Number(strPartCounter); // returns NaN
+
+if(Number.isNaN(numPartCounter)){
+    console.log(`partCounter is NOT a number =>${strPartCounter}`);
+}else{
+    console.log(`partCounter IS a number=>${strPartCounter}`);
+}
+
 

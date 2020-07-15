@@ -18,7 +18,7 @@ Find next comma. 44, 0x2C
 Skip comma
 Read part counter. ASCII integer
 */
-var CNC103Frame = `{{{{}103,10%`
+var CNC103Frame = `{{{{}103,     10%`
 var data = Buffer.from(CNC103Frame);
 
 client.on('message',function(msg,info){
@@ -27,7 +27,8 @@ client.on('message',function(msg,info){
 });
 
 //sending msg
-client.send(data,2222,'localhost',function(error){
+// client.send(data,2222,'localhost',function(error){
+  client.send(data,2221,'localhost',function(error){
   if(error){
     client.close();
   }else{
