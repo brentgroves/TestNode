@@ -8,11 +8,11 @@ console.log(`data.toString()=>${data1.toString()}`);
 /*
 buffer.indexOf(value, start, encoding);
 */
-let startChar=data1.indexOf('}', 0)+1;
+let startChar=data1.indexOf('}', 0);
 console.log(`data1.indexOf('}', 0)=>${data1.indexOf('}', 0)}`);
-let endOfId = data1.indexOf(',', startChar);
+let firstComma = data1.indexOf(',', startChar);
 console.log(`data1.indexOf(',', startChar)=>${data1.indexOf(',', startChar)}`);
-var id = data1.slice(startChar, endOfId);
+var id = data1.slice(startChar+1, firstComma);
 console.log(`CNC id=>${id}`);
 var strId = id.toString();
 var intId = parseInt(strId, 10);
@@ -23,8 +23,8 @@ if(Number.isNaN(numId)){
     console.log(`strId IS a number`);
 }
 
-let endOfFrame = data1.indexOf(endOfId, '%');
-var bufPartCounter = data1.slice(endOfId+1, endOfFrame);
+let endOfFrame = data1.indexOf(firstComma, '%');
+var bufPartCounter = data1.slice(firstComma+1, endOfFrame);
 var strPartCounter = bufPartCounter.toString();
 var numPartCounter = Number(strPartCounter); // returns NaN
 
@@ -38,6 +38,9 @@ if(Number.isNaN(numPartCounter)){
 
 // var fail = Number('42px'); // returns NaN
 // Number.isNaN(123) //false
+const buf = Buffer.from('hello world', 'utf8');
+
+console.log(buf.toString('hex'));
 
 var buff=Buffer.from('7468697320697320612074c3a97374', 'hex');
 console.log(`buff=>${buff}`);
