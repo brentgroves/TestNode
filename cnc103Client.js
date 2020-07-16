@@ -28,7 +28,8 @@ client.on('message',function(msg,info){
 });
 
 //sending msg
-client.send(data,2222,'localhost',function(error){
+// client.send(data,2222,'10.1.1.83',function(error){
+  client.send(data,2222,'localhost',function(error){
 //  client.send(data,2221,'localhost',function(error){
   if(error){
     client.close();
