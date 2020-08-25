@@ -110,7 +110,7 @@ function main()
 // -- "CNC_Part_Operation_Key":1,"Set_No":1,"Block_No":7,"Current_Value":29392,"Trans_Date":"2020-08-25 10:17:55"
 //  Test2(1,1,1,3,"2020-08-26 10:17:55");
 
-  UpdateCNCPartOperationAssemblyCurrentValue(1,1,1,8,"2020-05-26 10:17:55");
+  UpdateCNCPartOperationAssemblyCurrentValue(1,1,2,9,"2020-06-26 10:17:55");
 }
 
 main();
