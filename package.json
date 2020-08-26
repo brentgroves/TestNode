@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "moment": "^2.27.0",
-    "mariadb": "^2.4.0"
+    "mariadb": "^2.4.0",
+    "mqtt": "^4.1.0"
   }
 }
